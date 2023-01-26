@@ -1,71 +1,71 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Form, Input, Button } from "antd";
 
-function Form(props) {
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [body, setBody] = useState("");
-  // const navigate = useNavigate();
+function Formm(props) {
+  const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
 
-  const sendDatatoApp = async () => {
+  const onFinish = async (values) => {
     try {
-      let x = await axios.post("http://localhost:4000/api/save", {
-        title,
-        body,
-        author,
-      });
+      setLoading(true);
+      let x = await axios.post("http://localhost:4000/api/save", values);
       console.log(x, "success");
     } catch (er) {
       console.log(er);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    // navigate("/");
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
   };
 
   return (
-    <div className="container">
-      <form action="">
-        <div className="form-group mt-5 ">
-          <label htmlFor="">Enter Title</label>
-          <input
-            className="form-control"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            style={{ margin: "12px" }}
-            placeholder="Enter title"
-          />
+    <div class="form-area mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <Form
+              form={form}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+            >
+              <Form.Item
+                label="Title"
+                name="title"
+                rules={[{ required: true, message: "Please input the title!" }]}
+              >
+                <Input placeholder="Enter title" />
+              </Form.Item>
+              <Form.Item
+                label="Author"
+                name="author"
+                rules={[
+                  { required: true, message: "Please input the author!" },
+                ]}
+              >
+                <Input placeholder="Enter author" />
+              </Form.Item>
+              <Form.Item
+                label="Body"
+                name="body"
+                rules={[{ required: true, message: "Please input the body!" }]}
+              >
+                <Input placeholder="Enter body" />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" loading={loading} htmlType="submit">
+                  Save
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
         </div>
-        <div className="form-group mt-5 ">
-          <label htmlFor="">Enter Author</label>
-          <input
-            className="form-control"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            style={{ margin: "12px" }}
-            placeholder="Enter author"
-          />
-        </div>
-        <div className="form-group mt-5 ">
-          <label htmlFor="">Enter Body</label>
-          <input
-            className="form-control"
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-            style={{ margin: "12px" }}
-            placeholder="Enter body"
-          />
-        </div>
-        <button
-          className="btn btn-primary mt-3"
-          type="button"
-          onClick={sendDatatoApp}
-        >
-          Save
-        </button>
-      </form>
+      </div>
     </div>
   );
 }
 
-export default Form;
+export default Formm;

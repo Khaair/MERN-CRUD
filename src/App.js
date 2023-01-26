@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import "./App.css";
 import EditForm from "./Componet/EditForm";
-import Form from "./Componet/Form";
+import Formm from "./Componet/Form";
 import Home from "./Componet/Home";
 
 function App() {
@@ -45,7 +45,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home datas={data} DeleteFn={Delete} />} />
-        <Route path="/Form" element={<Form fetch={FetchData} />} />
+        <Route path="/Form" element={<Formm fetch={FetchData} />} />
         <Route path="/edit/:id" element={<EditForm fetch={FetchData} />} />
       </Routes>
     </div>

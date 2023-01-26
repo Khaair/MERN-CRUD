@@ -1,0 +1,34 @@
+* {
+  font-family: "IBM Plex Sans Thai Looped", sans-serif;
+  font-family: "Roboto", sans-serif;
+}
+.navv {
+  background-color: black;
+  height: 60px;
+}
+
+.navv ul {
+  display: flex;
+  justify-content: center;
+
+  list-style: none;
+  color: white;
+}
+
+.navv ul li {
+  margin: 10px;
+}
+
+.ll {
+  color: beige;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.ll:hover {
+  color: orange;
+}
+
+.mright {
+  margin-right: 10px;
+}

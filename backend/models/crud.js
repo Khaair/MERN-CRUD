@@ -15,7 +15,7 @@ const crudSchema = new Schema({
     required: [true, "Body is required"],
   },
   file: {
-    type: Object,
+    type: String,
     required: [true, "Image is required"],
   },
 });

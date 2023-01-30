@@ -7,7 +7,7 @@ const app = express();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./uploads");
+    cb(null, "../public/uploads");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname);
@@ -42,19 +42,12 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const title = req.body.title;
-    const author = req.body.author;
-    const body = req.body.body;
-    const file = req.file;
-
-    console.log(title, author, body, file);
-
     try {
       const crudData = new crudModel({
         title: req.body.title,
         author: req.body.author,
         body: req.body.body,
-        file: req.file,
+        file: req.file.filename,
       });
       const savedData = await crudData.save();
       res.status(200).json({

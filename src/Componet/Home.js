@@ -28,7 +28,6 @@ function Home({ datas, DeleteFn }) {
       console.log(er);
     }
   };
-
   return (
     <div className="container mt-5">
       <table className="table table-dark">
@@ -38,30 +37,39 @@ function Home({ datas, DeleteFn }) {
             <th scope="col">title</th>
             <th scope="col">author</th>
             <th scope="col">body</th>
-            <th scope="col">edit/delete</th>
+            <th scope="col">Image</th>
+
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
           {/* {JSON.stringify(datas)} */}
 
           {data.map((el, ind) => {
+            // const images = require.context(`../uploads/${el?.file}`, true);
+
             return (
               <tr key={ind}>
                 <th scope="row">{ind + 1}</th>
-                <td>{el.title}</td>
-                <td>{el.author}</td>
-                <td>{el.body}</td>
+                <td>{el?.title}</td>
+                <td>{el?.author}</td>
+                <td>{el?.body}</td>
+                <td className="ttrrr">
+                  <img src={`/uploads/${el?.file}`} alt="" />
+                </td>
                 <td>
-                  <Link to={`/edit/${el._id}`}>
-                    <button className="btn btn-success mright"> Edit</button>
-                  </Link>
+                  <div className="d-flex">
+                    <Link to={`/edit/${el._id}`}>
+                      <button className="btn btn-success mright"> Edit</button>
+                    </Link>
 
-                  <button
-                    onClick={() => deleteMe(el._id)}
-                    className="btn btn-danger"
-                  >
-                    Delete
-                  </button>
+                    <button
+                      onClick={() => deleteMe(el._id)}
+                      className="btn btn-danger"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
             );

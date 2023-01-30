@@ -14,6 +14,10 @@ const crudSchema = new Schema({
     type: String,
     required: [true, "Body is required"],
   },
+  file: {
+    type: Object,
+    required: [true, "Image is required"],
+  },
 });
 
 crudSchema.path("title").validate(function (value) {

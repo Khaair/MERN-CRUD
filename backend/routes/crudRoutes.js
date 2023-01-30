@@ -1,8 +1,23 @@
 const express = require("express");
+const multer = require("multer");
 const router = express.Router();
 const crudModel = require("../models/crud");
 const { check, validationResult } = require("express-validator");
+const app = express();
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 router.get("/show", async (req, res) => {
   try {
     let data = await crudModel.find();
@@ -14,6 +29,8 @@ router.get("/show", async (req, res) => {
 
 router.post(
   "/save",
+
+  upload.single("file"),
   [
     check("title").not().isEmpty().withMessage("Title is required"),
     check("author").not().isEmpty().withMessage("Author is required"),
@@ -24,11 +41,20 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+
+    const title = req.body.title;
+    const author = req.body.author;
+    const body = req.body.body;
+    const file = req.file;
+
+    console.log(title, author, body, file);
+
     try {
       const crudData = new crudModel({
         title: req.body.title,
         author: req.body.author,
         body: req.body.body,
+        file: req.file,
       });
       const savedData = await crudData.save();
       res.status(200).json({
@@ -43,7 +69,7 @@ router.post(
 );
 
 // Get Single information
-router.route("/showSIngle/:id").get(async (req, res, next) => {
+router.route("/show-single/:id").get(async (req, res, next) => {
   try {
     let data = await crudModel.findById(req.params.id);
     if (!data) {

@@ -22,7 +22,10 @@ mongoose.connect(
 );
 
 const crudRoutes = require("./routes/crudRoutes");
+const fileUploadRoutes = require("./routes/fileUploadRoutes");
+
 app.use("/api", crudRoutes);
+app.use("/api", fileUploadRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);

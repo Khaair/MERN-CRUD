@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -13,7 +13,7 @@ const EditForm = () => {
   const fetchdata = async () => {
     try {
       const data = await axios.get(
-        `http://localhost:4000/api/showSIngle/${id}`
+        `http://localhost:4000/api/show-single/${id}`
       );
 
       form.setFieldsValue({
